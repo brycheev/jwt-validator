@@ -1,0 +1,30 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/jwt-validator/src",
+  "monorepo": true,
+  "root": "apps/jwt-validator",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/jwt-validator/tsconfig.app.json"
+  },
+  "projects": {
+    "jwt-validator": {
+      "type": "application",
+      "root": "apps/jwt-validator",
+      "entryFile": "main",
+      "sourceRoot": "apps/jwt-validator/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/jwt-validator/tsconfig.app.json"
+      }
+    },
+    "validator": {
+      "type": "application",
+      "root": "apps/validator",
+      "entryFile": "main",
+      "sourceRoot": "apps/validator/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/validator/tsconfig.app.json"
+      }
+    }
+  }
+}
