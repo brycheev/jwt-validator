@@ -5,7 +5,6 @@ export class CacheManagerService {
   private cache = cache;
   set(key: string, value: any) {
     this.cache.set(key, value);
-    // setTimeout(() => this.cache.delete(key), 300000);
   }
 
   get(key: string) {

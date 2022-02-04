@@ -14,7 +14,7 @@ export class JwtGuard implements CanActivate {
     if (!token) {
       return false;
     }
-    const cacheToken = await this.cacheService.get(token.toString());
+    const cacheToken = this.cacheService.get(token.toString());
     if (cacheToken) {
       return true;
     }
