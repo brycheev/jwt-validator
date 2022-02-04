@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CacheManagerModule } from './cache-manager/cache-manager.module';
 import { CacheManagerService } from './cache-manager/cache-manager.service';
+import { CronModule } from './cron/cron.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CacheManagerService } from './cache-manager/cache-manager.service';
       },
     ]),
     CacheManagerModule,
+    CronModule,
   ],
   controllers: [AppController],
   providers: [AppService, CacheManagerService],

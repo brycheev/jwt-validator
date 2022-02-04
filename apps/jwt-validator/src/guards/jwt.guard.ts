@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Cache } from 'cache-manager';
 import { CacheManagerService } from '../cache-manager/cache-manager.service';
 
 export class JwtGuard implements CanActivate {
@@ -23,7 +22,8 @@ export class JwtGuard implements CanActivate {
       .send('validate', token)
       .toPromise();
     if (isValid) {
-      await this.cacheService.set(token, 'active');
+      const expiredIn = new Date().getTime() + 5 * 60000;
+      await this.cacheService.set(token.toString(), expiredIn);
     }
     return isValid;
   }
