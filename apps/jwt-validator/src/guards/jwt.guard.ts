@@ -1,12 +1,13 @@
 import { CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Cache } from 'cache-manager';
+import { CacheManagerService } from '../cache-manager/cache-manager.service';
 
 export class JwtGuard implements CanActivate {
   constructor(
     @Inject('VALIDATOR_SERVICE')
     protected readonly validatorMicroservice: ClientProxy,
-    @Inject('CACHE_MANAGER') private cacheManager: Cache,
+    private readonly cacheService: CacheManagerService,
   ) {}
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
@@ -14,7 +15,7 @@ export class JwtGuard implements CanActivate {
     if (!token) {
       return false;
     }
-    const cacheToken = await this.cacheManager.get(token.toString());
+    const cacheToken = await this.cacheService.get(token.toString());
     if (cacheToken) {
       return true;
     }
@@ -22,9 +23,7 @@ export class JwtGuard implements CanActivate {
       .send('validate', token)
       .toPromise();
     if (isValid) {
-      await this.cacheManager.set(token, 'active', {
-        ttl: 300,
-      });
+      await this.cacheService.set(token, 'active');
     }
     return isValid;
   }

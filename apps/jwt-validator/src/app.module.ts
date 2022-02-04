@@ -2,6 +2,8 @@ import { CacheModule, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CacheManagerModule } from './cache-manager/cache-manager.module';
+import { CacheManagerService } from './cache-manager/cache-manager.service';
 
 @Module({
   imports: [
@@ -14,9 +16,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     ]),
-    CacheModule.register(),
+    CacheManagerModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CacheManagerService],
 })
 export class AppModule {}
