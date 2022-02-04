@@ -9,7 +9,7 @@ export class CacheManagerService {
   }
 
   get(key: string) {
-    return this.cache.get(key);
+    return this.cache.has(key);
   }
 
   delete(key: string) {
